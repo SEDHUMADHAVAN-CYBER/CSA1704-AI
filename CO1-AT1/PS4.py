@@ -1,5 +1,9 @@
 class CabAgent:
+#Goal-Based Agent
 
+#goal-Based Agent
+#Decision Making
+#Rule-Based Selection
     def __init__(self):
 
         self.cabs = {

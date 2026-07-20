@@ -1,5 +1,10 @@
 class MarsRoverAgent:
+#Model-Based Goal Agent
+#Perceive → Think → Act
 
+#Intelligent Agent
+#Model-Based Agent
+#Decision Making
     def __init__(self):
         self.goal = "Collect Rock Sample"
 

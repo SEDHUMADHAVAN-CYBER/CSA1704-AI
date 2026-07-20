@@ -1,5 +1,10 @@
 N = 8
+#Backtracking Search
+#Constraint Satisfaction Problem (CSP)
 
+#Backtracking
+#Constraint Satisfaction Problem (CSP)
+#State Space Search
 board = [-1] * N
 
 def safe(row, col):

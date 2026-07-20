@@ -1,5 +1,9 @@
 import heapq
+#Uniform Cost Search (UCS)
 
+#Uniform Cost Search
+#Path Finding
+#Cost-Based Decision Making
 graph = {
     "S":[("A",2),("B",5)],
     "A":[("C",4),("D",7)],

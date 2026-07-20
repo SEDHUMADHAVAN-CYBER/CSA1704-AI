@@ -1,5 +1,9 @@
 from collections import deque
+#Breadth-First Search (BFS)
 
+#Intelligent Search
+#State Space Search
+#Goal-Based Problem Solving
 CAPACITY = (4, 3)
 GOAL = 2
 
