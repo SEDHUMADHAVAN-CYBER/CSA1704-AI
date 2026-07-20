@@ -1,26 +1,47 @@
-cabs = {
-    "Micro": 120,
-    "Mini": 160,
-    "Sedan": 250,
-    "Prime": 350,
-    "Shared": 90
-}
+class CabAgent:
 
-source = input("Enter Source : ")
-destination = input("Enter Destination : ")
+    def __init__(self):
 
-print("\nAvailable Cabs")
+        self.cabs = {
+            "Micro":120,
+            "Mini":160,
+            "Sedan":250,
+            "Prime":350
+        }
 
-for cab in cabs:
-    print(cab, "- ₹", cabs[cab])
+    def perceive(self):
 
-choice = input("\nSelect Cab : ")
+        destination = input("Destination : ")
+        budget = int(input("Budget : "))
 
-if choice in cabs:
-    print("\nBooking Successful")
-    print("Source :", source)
-    print("Destination :", destination)
-    print("Cab :", choice)
-    print("Fare : ₹", cabs[choice])
-else:
-    print("Cab Not Available")
+        return destination, budget
+
+    def think(self, budget):
+
+        possible = []
+
+        for cab, fare in self.cabs.items():
+            if fare <= budget:
+                possible.append((cab, fare))
+
+        if possible:
+            return min(possible, key=lambda x:x[1])
+
+        return None
+
+    def act(self, result):
+
+        if result:
+            print("Recommended Cab:", result[0])
+            print("Fare:", result[1])
+        else:
+            print("No Cab Available")
+
+
+agent = CabAgent()
+
+destination, budget = agent.perceive()
+
+choice = agent.think(budget)
+
+agent.act(choice)

@@ -1,35 +1,50 @@
 from collections import deque
 
-def water_jug():
-    visited = set()
+CAPACITY = (4, 3)
+GOAL = 2
+
+def get_next_states(state):
+    x, y = state
+    next_states = []
+
+    # Fill jugs
+    next_states.append((4, y))
+    next_states.append((x, 3))
+
+    # Empty jugs
+    next_states.append((0, y))
+    next_states.append((x, 0))
+
+    # Pour 4 -> 3
+    transfer = min(x, 3 - y)
+    next_states.append((x - transfer, y + transfer))
+
+    # Pour 3 -> 4
+    transfer = min(y, 4 - x)
+    next_states.append((x + transfer, y - transfer))
+
+    return next_states
+
+def bfs():
     queue = deque([((0, 0), [])])
+    visited = set()
 
     while queue:
-        (jug4, jug3), path = queue.popleft()
+        state, path = queue.popleft()
 
-        if (jug4, jug3) in visited:
+        if state in visited:
             continue
-        visited.add((jug4, jug3))
 
-        path = path + [(jug4, jug3)]
+        visited.add(state)
+        path = path + [state]
 
-        if jug4 == 2:
-            print("Solution:")
-            for state in path:
-                print(state)
+        if state[0] == GOAL:
+            print("Goal Found!")
+            print("Solution Path:", path)
             return
 
-        next_states = [
-            (4, jug3),                          # Fill 4-gallon jug
-            (jug4, 3),                          # Fill 3-gallon jug
-            (0, jug3),                          # Empty 4-gallon jug
-            (jug4, 0),                          # Empty 3-gallon jug
-            (jug4 - min(jug4, 3-jug3), jug3 + min(jug4, 3-jug3)),  # 4 -> 3
-            (jug4 + min(jug3, 4-jug4), jug3 - min(jug3, 4-jug4))   # 3 -> 4
-        ]
+        for next_state in get_next_states(state):
+            if next_state not in visited:
+                queue.append((next_state, path))
 
-        for state in next_states:
-            if state not in visited:
-                queue.append((state, path))
-
-water_jug()
+bfs()

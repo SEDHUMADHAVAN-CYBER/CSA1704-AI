@@ -1,37 +1,44 @@
 import heapq
 
 graph = {
-    'S': [('A', 2), ('B', 4)],
-    'A': [('C', 3), ('D', 5)],
-    'B': [('D', 1)],
-    'C': [('G', 4)],
-    'D': [('G', 2)],
-    'G': []
+    "S":[("A",2),("B",5)],
+    "A":[("C",4),("D",7)],
+    "B":[("D",1)],
+    "C":[("G",3)],
+    "D":[("G",2)],
+    "G":[]
 }
 
-def ucs(start, goal):
+def uniform_cost_search(start, goal):
 
-    pq = [(0, start, [])]
-    visited = set()
+    frontier = [(0, start, [])]
 
-    while pq:
+    explored = set()
 
-        cost, node, path = heapq.heappop(pq)
+    while frontier:
 
-        if node in visited:
+        cost, node, path = heapq.heappop(frontier)
+
+        if node in explored:
             continue
 
-        visited.add(node)
+        explored.add(node)
 
         path = path + [node]
 
         if node == goal:
-            print("Shortest Path :", " -> ".join(path))
-            print("Minimum Cost :", cost)
+
+            print("Optimal Path:", path)
+            print("Total Cost:", cost)
             return
 
         for neighbour, weight in graph[node]:
-            heapq.heappush(pq, (cost + weight, neighbour, path))
 
+            if neighbour not in explored:
 
-ucs('S', 'G')
+                heapq.heappush(frontier,
+                               (cost+weight,
+                                neighbour,
+                                path))
+
+uniform_cost_search("S","G")

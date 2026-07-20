@@ -1,29 +1,35 @@
-class MarsRover:
+class MarsRoverAgent:
 
-    def move(self):
-        print("Moving Forward")
+    def __init__(self):
+        self.goal = "Collect Rock Sample"
 
-    def capture_image(self):
-        print("Capturing Image")
+    def perceive(self):
+        return {
+            "rock": True,
+            "obstacle": False,
+            "battery": 90
+        }
 
-    def collect_sample(self):
-        print("Collecting Soil Sample")
+    def think(self, percept):
+        if percept["battery"] < 20:
+            return "Recharge"
 
-    def analyze_sample(self):
-        print("Analyzing Sample")
+        if percept["obstacle"]:
+            return "Avoid Obstacle"
 
-    def avoid_obstacle(self):
-        print("Obstacle Detected - Turning")
+        if percept["rock"]:
+            return "Collect Sample"
 
-    def send_data(self):
-        print("Sending Data to Earth")
+        return "Move Forward"
+
+    def act(self, action):
+        print("Agent Action:", action)
 
 
-rover = MarsRover()
+agent = MarsRoverAgent()
 
-rover.move()
-rover.capture_image()
-rover.collect_sample()
-rover.analyze_sample()
-rover.avoid_obstacle()
-rover.send_data()
+percept = agent.perceive()
+
+decision = agent.think(percept)
+
+agent.act(decision)

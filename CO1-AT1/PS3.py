@@ -1,55 +1,33 @@
 N = 8
 
-board = [[0 for _ in range(N)] for _ in range(N)]
+board = [-1] * N
 
-def safe(board, row, col):
-
+def safe(row, col):
     for i in range(col):
-        if board[row][i]:
+        if board[i] == row or abs(board[i]-row) == abs(i-col):
             return False
-
-    i, j = row, col
-    while i >= 0 and j >= 0:
-        if board[i][j]:
-            return False
-        i -= 1
-        j -= 1
-
-    i, j = row, col
-    while i < N and j >= 0:
-        if board[i][j]:
-            return False
-        i += 1
-        j -= 1
-
     return True
 
-
-def solve(board, col):
-
+def solve(col):
     if col == N:
         return True
 
     for row in range(N):
 
-        if safe(board, row, col):
+        if safe(row, col):
 
-            board[row][col] = 1
+            board[col] = row
 
-            if solve(board, col + 1):
+            if solve(col+1):
                 return True
 
-            board[row][col] = 0
+            board[col] = -1
 
     return False
 
-
-if solve(board, 0):
-
+if solve(0):
     print("Solution:")
-
-    for row in board:
-        print(row)
-
+    for c in range(N):
+        print("Column", c, "Row", board[c])
 else:
     print("No Solution")
